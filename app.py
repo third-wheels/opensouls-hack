@@ -8,6 +8,7 @@ import openai
 import random
 import re
 import smtplib
+from typing import Dict
 
 # Define the custom image
 third_wheels_image = Image.debian_slim(python_version="3.12").pip_install(
@@ -27,7 +28,9 @@ openai.api_key = os.getenv('OPENAI_API_KEY')
 
 app = App("third-wheels-modal-app", image=third_wheels_image, volumes={"/volumes/third-wheels": third_wheels_volume})
 
-@app.cls()
+@app.cls(
+    secrets=[Secret.from_name("third-wheels-secret")],
+)
 class ThirdWheels:
     def __init__(self):
         self.smtpObj = smtplib.SMTP('smtp.qq.com', 587)
