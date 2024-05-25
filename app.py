@@ -37,6 +37,20 @@ class ThirdWheels:
         self.login()
 
     def login(self):
+        for attempt in range(3):  # Retry up to 3 times
+            try:
+                self.smtpObj = smtplib.SMTP('smtp.qq.com', 587)
+                self.smtpObj.ehlo()
+                self.smtpObj.starttls()
+                self.smtpObj.login(os.getenv('EMAIL_USER'), os.getenv('EMAIL_PASSWORD'))
+                return True
+            except smtplib.SMTPException as e:
+                print(f'Attempt {attempt + 1}: Error during SMTP login: {e}')
+                time.sleep(5)  # Wait for 5 seconds before retrying
+        return False
+
+
+    def login(self):
         self.smtpObj.ehlo()
         self.smtpObj.starttls()
         self.smtpObj.login(os.getenv('EMAIL_USER'), os.getenv('EMAIL_PASSWORD'))
@@ -187,17 +201,27 @@ class ThirdWheels:
         print("Aggregated score: ", aggregated_score)
         message = self.message_to_remind(aggregated_score)
         print("Message: ", message)
-        return {"aggregated_score": aggregated_score, "message": message}
+        response = {"aggregated_score": aggregated_score, "message": message}
 
-    def mail_sender(self, name, email, passage):
-        body = f'Subject: [Kindly Reminder] Talk to your sweet heat\r\nFrom: 451165547@qq.com\r\n\r\nDear {name}, \n\n{passage}'
+        # Move the SMTP setup and login here
+        if not self.login():
+            print("SMTP login failed after multiple attempts.")
+            return {"error": "SMTP login failed"}
+
+        body = f'Subject: [Kindly Reminder] Talk to your sweet heart\r\nFrom: 451165547@qq.com\r\n\r\nDear {name}, \n\n{passage}'
         body = body.encode('utf-8')  # Specify the encoding
         print('Sending email to %s...' % email)
-        sendmailStatus = self.smtpObj.sendmail('451165547@qq.com', email, body)
+        try:
+            sendmailStatus = self.smtpObj.sendmail('451165547@qq.com', email, body)
 
-        if sendmailStatus != {}:
-            print('There was a problem sending email to %s: %s' % (email, sendmailStatus))
-        self.smtpObj.quit()
+            if sendmailStatus != {}:
+                print('There was a problem sending email to %s: %s' % (email, sendmailStatus))
+        except smtplib.SMTPException as e:
+            print(f'Error sending email: {e}')
+        finally:
+            self.smtpObj.quit()
+
+        return response
 
 
 if __name__ == "__main__":
