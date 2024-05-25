@@ -55,14 +55,11 @@ export async function POST(request: NextRequest) {
       data?.imageUrl
     );
 
-    // Combine the custom prompt with the user message content
-    const combinedMessageContent = `${prompts.systemPrompt}\n\n${userMessageContent}`;
-
-    console.log('[LlamaIndex]', 'Sending message:', combinedMessageContent);
+    console.log('[LlamaIndex]', 'Sending message:', userMessageContent);
 
     // Calling LlamaIndex's ChatEngine to get a streamed response
     const response = await chatEngine.chat({
-      message: combinedMessageContent,
+      message: userMessageContent,
       chatHistory: messages,
       stream: true,
     });

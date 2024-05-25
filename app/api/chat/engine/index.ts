@@ -8,6 +8,7 @@ import {
   VectorStoreIndex,
 } from 'llamaindex';
 import { CHUNK_OVERLAP, CHUNK_SIZE, STORAGE_CACHE_DIR } from './constants.mjs';
+import prompts from './prompts';
 
 async function getDataSource(llm: LLM) {
   const serviceContext = serviceContextFromDefaults({
@@ -42,5 +43,6 @@ export async function createChatEngine(llm: LLM) {
   return new ContextChatEngine({
     chatModel: llm,
     retriever,
+    systemPrompt: prompts.systemPrompt,
   });
 }
