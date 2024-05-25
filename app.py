@@ -184,26 +184,26 @@ class ThirdWheels:
 
         selected_weights = weights_by_time[time_dummy]
 
-        aggregated_score = (selected_weights['conversation_weight'] * conversation_score +
+        loneliness_score = (selected_weights['conversation_weight'] * conversation_score +
                             selected_weights['tone_weight'] * tone_score +
                             selected_weights['facial_weight'] * facial_score)
 
-        return aggregated_score
+        return loneliness_score
 
     @web_endpoint(method="POST")
     def web_inference(self, request: Request, item: Dict):
         data = item["data"]
         print("Data: ", data)
-        aggregated_score = self.main(data)
-        print("Aggregated score: ", aggregated_score)
+        loneliness_score = self.main(data)
+        print("Loneliness score: ", loneliness_score)
 
-        if aggregated_score < 0.5:
+        if loneliness_score < 0.5:
             print("The user is not lonely")
         else:
             print("The user is lonely")
 
             # TODO: send email to the partner
-            message = self.message_to_remind(aggregated_score)
+            message = self.message_to_remind(loneliness_score)
             print("Message: ", message)
 
         # no need to return to the frontend
@@ -229,4 +229,4 @@ if __name__ == "__main__":
         print("-------------------------------")
         print()
         print("data: ", data)
-        aggregated_score = main(data)
+        loneliness_score = main(data)
