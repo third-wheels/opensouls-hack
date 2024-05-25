@@ -82,7 +82,6 @@ export async function POST(request: NextRequest) {
       body: JSON.stringify(user_data)
     })
     .then(response => response.json())
-    .then(user_data => console.log(user_data))
     .catch((error) => {
       console.error('Error:', error);
     });

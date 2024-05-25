@@ -198,7 +198,8 @@ class ThirdWheels:
         print("Aggregated score: ", aggregated_score)
         message = self.message_to_remind(aggregated_score)
         print("Message: ", message)
-        return {"aggregated_score": aggregated_score, "message": message}
+        # no need to return to the frontend
+        return {}
 
     # def mail_sender(self, name, email, passage):
     #     body = f'Subject: [Kindly Reminder] Talk to your sweet heat\r\nFrom: 451165547@qq.com\r\n\r\nDear {name}, \n\n{passage}'
