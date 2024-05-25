@@ -10,6 +10,12 @@ import re
 import smtplib
 from typing import Dict
 
+from modal_config.base import (
+    MODAL_CPU,
+    MODAL_MEMORY,
+    MODAL_CONTAINER_IDLE_TIMEOUT,
+)
+
 # Define the custom image
 third_wheels_image = Image.debian_slim(python_version="3.10").pip_install(
     "openai==0.27.10",
@@ -29,17 +35,22 @@ openai.api_key = os.getenv('OPENAI_API_KEY')
 app = App("third-wheels-modal-app", image=third_wheels_image, volumes={"/volumes/third-wheels": third_wheels_volume})
 
 @app.cls(
+    cpu=MODAL_CPU,
+    memory=MODAL_MEMORY,
+    container_idle_timeout=MODAL_CONTAINER_IDLE_TIMEOUT,
+    image=third_wheels_image,
     secrets=[Secret.from_name("third-wheels-secret")],
+    keep_warm=1,
 )
 class ThirdWheels:
-    def __init__(self):
-        self.smtpObj = smtplib.SMTP('smtp.qq.com', 587)
-        self.login()
+    # def __init__(self):
+    #     self.smtpObj = smtplib.SMTP('smtp.qq.com', 587)
+    #     self.login()
 
-    def login(self):
-        self.smtpObj.ehlo()
-        self.smtpObj.starttls()
-        self.smtpObj.login(os.getenv('EMAIL_USER'), os.getenv('EMAIL_PASSWORD'))
+    # def login(self):
+    #     self.smtpObj.ehlo()
+    #     self.smtpObj.starttls()
+    #     self.smtpObj.login(os.getenv('EMAIL_USER'), os.getenv('EMAIL_PASSWORD'))
 
     def generate_dataset(self, id):
         """Generates a single dataset entry."""
@@ -189,15 +200,15 @@ class ThirdWheels:
         print("Message: ", message)
         return {"aggregated_score": aggregated_score, "message": message}
 
-    def mail_sender(self, name, email, passage):
-        body = f'Subject: [Kindly Reminder] Talk to your sweet heat\r\nFrom: 451165547@qq.com\r\n\r\nDear {name}, \n\n{passage}'
-        body = body.encode('utf-8')  # Specify the encoding
-        print('Sending email to %s...' % email)
-        sendmailStatus = self.smtpObj.sendmail('451165547@qq.com', email, body)
+    # def mail_sender(self, name, email, passage):
+    #     body = f'Subject: [Kindly Reminder] Talk to your sweet heat\r\nFrom: 451165547@qq.com\r\n\r\nDear {name}, \n\n{passage}'
+    #     body = body.encode('utf-8')  # Specify the encoding
+    #     print('Sending email to %s...' % email)
+    #     sendmailStatus = self.smtpObj.sendmail('451165547@qq.com', email, body)
 
-        if sendmailStatus != {}:
-            print('There was a problem sending email to %s: %s' % (email, sendmailStatus))
-        self.smtpObj.quit()
+    #     if sendmailStatus != {}:
+    #         print('There was a problem sending email to %s: %s' % (email, sendmailStatus))
+    #     self.smtpObj.quit()
 
 
 if __name__ == "__main__":
