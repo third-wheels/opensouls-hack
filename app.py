@@ -205,6 +205,7 @@ class ThirdWheels:
             # TODO: send email to the partner
             message = self.message_to_remind(loneliness_score)
             print("Message: ", message)
+            print("Email sent to the partner...")
 
         # no need to return to the frontend
         return {}
