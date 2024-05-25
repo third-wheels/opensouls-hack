@@ -196,8 +196,16 @@ class ThirdWheels:
         print("Data: ", data)
         aggregated_score = self.main(data)
         print("Aggregated score: ", aggregated_score)
-        message = self.message_to_remind(aggregated_score)
-        print("Message: ", message)
+
+        if aggregated_score < 0.5:
+            print("The user is not lonely")
+        else:
+            print("The user is lonely")
+
+            # TODO: send email to the partner
+            message = self.message_to_remind(aggregated_score)
+            print("Message: ", message)
+
         # no need to return to the frontend
         return {}
 
