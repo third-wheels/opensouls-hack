@@ -9,6 +9,7 @@
     "generate": "node app/api/chat/engine/generate.mjs"
   },
   "dependencies": {
+    "@opensouls/engine": "^0.1.32",
     "@radix-ui/react-slot": "^1.0.2",
     "ai": "^2.2.37",
     "aws4": "^1.12.0",
