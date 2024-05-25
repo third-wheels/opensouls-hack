@@ -11,8 +11,8 @@ import smtplib
 from typing import Dict
 
 # Define the custom image
-third_wheels_image = Image.debian_slim(python_version="3.12").pip_install(
-    "openai",
+third_wheels_image = Image.debian_slim(python_version="3.10").pip_install(
+    "openai==0.27.10",
     "fastapi",
     "python-dotenv",
 )
