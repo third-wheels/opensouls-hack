@@ -97,20 +97,6 @@ yarl = ">=1.0,<2.0"
 speedups = ["Brotli", "aiodns", "brotlicffi"]
 
 [[package]]
-name = "aiohttp-retry"
-version = "2.8.3"
-description = "Simple retry client for aiohttp"
-optional = false
-python-versions = ">=3.7"
-files = [
-    {file = "aiohttp_retry-2.8.3-py3-none-any.whl", hash = "sha256:3aeeead8f6afe48272db93ced9440cf4eda8b6fd7ee2abb25357b7eb28525b45"},
-    {file = "aiohttp_retry-2.8.3.tar.gz", hash = "sha256:9a8e637e31682ad36e1ff9f8bcba912fcfc7d7041722bc901a4b948da4d71ea9"},
-]
-
-[package.dependencies]
-aiohttp = "*"
-
-[[package]]
 name = "aiosignal"
 version = "1.3.1"
 description = "aiosignal: a list of registered asynchronous callbacks"
@@ -494,23 +480,6 @@ embeddings = ["matplotlib", "numpy", "openpyxl (>=3.0.7)", "pandas (>=1.2.3)", "
 wandb = ["numpy", "openpyxl (>=3.0.7)", "pandas (>=1.2.3)", "pandas-stubs (>=1.1.0.11)", "wandb"]
 
 [[package]]
-name = "pyjwt"
-version = "2.8.0"
-description = "JSON Web Token implementation in Python"
-optional = false
-python-versions = ">=3.7"
-files = [
-    {file = "PyJWT-2.8.0-py3-none-any.whl", hash = "sha256:59127c392cc44c2da5bb3192169a91f429924e17aff6534d70fdc02ab3e04320"},
-    {file = "PyJWT-2.8.0.tar.gz", hash = "sha256:57e28d156e3d5c10088e0c68abb90bfac3df82b40a71bd0daa20c65ccd5c23de"},
-]
-
-[package.extras]
-crypto = ["cryptography (>=3.4.0)"]
-dev = ["coverage[toml] (==5.0.4)", "cryptography (>=3.4.0)", "pre-commit", "pytest (>=6.0.0,<7.0.0)", "sphinx (>=4.5.0,<5.0.0)", "sphinx-rtd-theme", "zope.interface"]
-docs = ["sphinx (>=4.5.0,<5.0.0)", "sphinx-rtd-theme", "zope.interface"]
-tests = ["coverage[toml] (==5.0.4)", "pytest (>=6.0.0,<7.0.0)"]
-
-[[package]]
 name = "python-dotenv"
 version = "0.19.2"
 description = "Read key-value pairs from a .env file and set them as environment variables"
@@ -564,23 +533,6 @@ dev = ["pytest (>=6)", "pytest-cov", "pytest-timeout", "pytest-xdist"]
 notebook = ["ipywidgets (>=6)"]
 slack = ["slack-sdk"]
 telegram = ["requests"]
-
-[[package]]
-name = "twilio"
-version = "9.1.0"
-description = "Twilio API client and TwiML generator"
-optional = false
-python-versions = ">=3.7.0"
-files = [
-    {file = "twilio-9.1.0-py2.py3-none-any.whl", hash = "sha256:eb4687a9f81dc3118e8981c5a46d9f8184baee135c79afed47c714c759c31bbc"},
-    {file = "twilio-9.1.0.tar.gz", hash = "sha256:ab2eb19c779855bf02cdca8a7e02ebaa64feee47da7b591ac9088ec07a6962e2"},
-]
-
-[package.dependencies]
-aiohttp = ">=3.8.4"
-aiohttp-retry = ">=2.8.3"
-PyJWT = ">=2.0.0,<3.0.0"
-requests = ">=2.0.0"
 
 [[package]]
 name = "urllib3"
@@ -705,4 +657,4 @@ multidict = ">=4.0"
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.8"
-content-hash = "713980f54b969277df8f69cc13ada587d7294246ef70c26bd85e907e2d40d0fc"
+content-hash = "2260106b3fbb5842609b98c2d3c446b2d431bde198603df38b82e40d2fa34012"

@@ -2,22 +2,6 @@ import openai
 from datetime import datetime, timedelta
 from dotenv import load_dotenv
 import os
-from twilio.rest import Client
-
-class TwilioClient:
-    def __init__(self):
-        account_sid = os.getenv('TWILIO_ACCOUNT_SID')
-        auth_token = os.getenv('TWILIO_AUTH_TOKEN')
-        self.twilio_phone_number = os.getenv('TWILIO_PHONE_NUMBER')
-        self.client = Client(account_sid, auth_token)
-
-    def send_message(self, body, to):
-        message = self.client.messages.create(
-            body=body,
-            from_=self.twilio_phone_number,
-            to=to
-        )
-        return message.sid
 
 def generate_dataset(id):
     """Generates a single dataset entry."""
@@ -138,11 +122,6 @@ load_dotenv()
 # Set up your OpenAI API key from .env file
 openai.api_key = os.getenv('OPENAI_API_KEY')
 client = openai.OpenAI()
-
-# add twillio client
-# 9295388280
-twilio_client = TwilioClient()
-twilio_client.messages.send_message(to="9295388280", body="Hello there!")
 
 # # Generate 10 sample datasets
 # datasets = []
