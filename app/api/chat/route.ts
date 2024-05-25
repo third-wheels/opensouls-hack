@@ -3,7 +3,6 @@ import { ChatMessage, MessageContent, OpenAI, ALL_AVAILABLE_OPENAI_MODELS } from
 import { NextRequest, NextResponse } from 'next/server';
 import { createChatEngine } from './engine';
 import { LlamaIndexStream } from './llamaindex-stream';
-import prompts from './engine/prompts';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
