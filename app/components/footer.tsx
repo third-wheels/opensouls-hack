@@ -7,7 +7,7 @@ export default function Footer() {
         © {new Date().getFullYear()} third-wheels team. All rights reserved.
       </p>
       <a
-        href="https://github.com/chenrui333/third-wheels"
+        href="https://github.com/chenrui333/opensouls-hack"
         className="flex items-center justify-center font-nunito text-lg font-bold gap-2 mt-4"
       >
         <span>Visit our GitHub</span>
