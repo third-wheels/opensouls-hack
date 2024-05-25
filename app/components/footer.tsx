@@ -13,7 +13,7 @@ export default function Footer() {
         <span>Visit our GitHub</span>
         <Image
           className="rounded-xl"
-          src="/moon.png"
+          src="/third-wheel.png"
           alt="third-wheels Logo"
           width={40}
           height={40}

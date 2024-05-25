@@ -14,7 +14,7 @@ export default function Header() {
           <span>Built by third-wheels team</span>
           <Image
             className="rounded-xl"
-            src="/moon.png"
+            src="/third-wheel.png"
             alt="third-wheels Logo"
             width={40}
             height={40}
