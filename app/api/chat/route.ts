@@ -3,6 +3,7 @@ import { ChatMessage, MessageContent, OpenAI, ALL_AVAILABLE_OPENAI_MODELS } from
 import { NextRequest, NextResponse } from 'next/server';
 import { createChatEngine } from './engine';
 import { LlamaIndexStream } from './llamaindex-stream';
+import prompts from './engine/prompts';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
@@ -54,9 +55,14 @@ export async function POST(request: NextRequest) {
       data?.imageUrl
     );
 
+    // Combine the custom prompt with the user message content
+    const combinedMessageContent = `${prompts.systemPrompt}\n\n${userMessageContent}`;
+
+    console.log('[LlamaIndex]', 'Sending message:', combinedMessageContent);
+
     // Calling LlamaIndex's ChatEngine to get a streamed response
     const response = await chatEngine.chat({
-      message: userMessageContent,
+      message: combinedMessageContent,
       chatHistory: messages,
       stream: true,
     });
