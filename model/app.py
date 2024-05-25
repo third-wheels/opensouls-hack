@@ -2,7 +2,22 @@ import openai
 from datetime import datetime, timedelta
 from dotenv import load_dotenv
 import os
-import random
+from twilio.rest import Client
+
+class TwilioClient:
+    def __init__(self):
+        account_sid = os.getenv('TWILIO_ACCOUNT_SID')
+        auth_token = os.getenv('TWILIO_AUTH_TOKEN')
+        self.twilio_phone_number = os.getenv('TWILIO_PHONE_NUMBER')
+        self.client = Client(account_sid, auth_token)
+
+    def send_message(self, body, to):
+        message = self.client.messages.create(
+            body=body,
+            from_=self.twilio_phone_number,
+            to=to
+        )
+        return message.sid
 
 def generate_dataset(id):
     """Generates a single dataset entry."""
@@ -19,7 +34,7 @@ def generate_dataset(id):
       {"bot": "I get why that’s worrying. Maybe he’s just super stressed or distracted with something?", "user": "I am not sure, I just feel like he should be talking to me more."},
       {"bot": "Totally fair, you deserve that connection. Have you tried letting him know how you feel?"}
     ]
-    
+
     calendar = []
     for _ in range(random.randint(0, 3)):  # Generate 0-3 calendar events
         hour = random.randint(7, 22)
@@ -50,20 +65,20 @@ def generate_dataset(id):
         "calendar of the day": calendar,
         "Application Usage": app_usage
     }
-    
+
     return dataset
 
 def evaluate_the_score(input):
-    
+
     prompt = f"""a
     Generate a conversation where the user feels lonely. After the conversation, provide a loneliness score between 0 and 1, where 1 is the most lonely state. Use the following structure for the conversation:
 
     {input}
-    
-    output the score only: [] 
-    
+
+    output the score only: []
+
     """
-    
+
     response = client.completions.create(
     model="gpt-3.5-turbo-instruct",
     prompt=prompt,
@@ -82,7 +97,7 @@ def main(data):
     tone_score_table = {"warm and fuzzy": 0.5, "neutral": 0.5, "sad": 0.9, "excited": 1, "frustrated": 0.5}
     facial_score_table = {"smiling": 0.5, "frowning": 0.2, "neutral": 0.9, "surprised": 1, "angry": 0.5}
 
-    # time_dummy_table, time between 0-8:0, 8-12:1, 12-18:2, 18-24:3, 
+    # time_dummy_table, time between 0-8:0, 8-12:1, 12-18:2, 18-24:3,
 
     hour = int(time.split(':')[0])  # Extract the hour and convert to integer
 
@@ -124,19 +139,22 @@ load_dotenv()
 openai.api_key = os.getenv('OPENAI_API_KEY')
 client = openai.OpenAI()
 
-# Generate 10 sample datasets
-datasets = []
-for i in range(10):
-    datasets.append(generate_dataset(i + 215))
-    
-for data in datasets:
-    print("-------------------------------")
-    print()
-    print("data: ", data)
-    aggregated_score = main(data)
-    print("-------------------------------")
-    print()
-    print("aggregated_score: ", aggregated_score)
-    print()
-    
+# add twillio client
+# 9295388280
+twilio_client = TwilioClient()
+twilio_client.messages.send_message(to="9295388280", body="Hello there!")
 
+# # Generate 10 sample datasets
+# datasets = []
+# for i in range(10):
+#     datasets.append(generate_dataset(i + 215))
+
+# for data in datasets:
+#     print("-------------------------------")
+#     print()
+#     print("data: ", data)
+#     aggregated_score = main(data)
+#     print("-------------------------------")
+#     print()
+#     print("aggregated_score: ", aggregated_score)
+#     print()
