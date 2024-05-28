@@ -26,6 +26,9 @@ const convertMessageContent = (
   ];
 };
 
+// third-wheels model
+const url = "https://third-wheels--third-wheels-modal-app-thirdwheels-web-inference.modal.run";
+
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
@@ -53,6 +56,35 @@ export async function POST(request: NextRequest) {
       userMessage.content,
       data?.imageUrl
     );
+
+    console.log('[LlamaIndex]', 'Sending message:', userMessageContent);
+
+    const date = new Date();
+    const currentTime = `${date.getHours().toString().padStart(2, '0')}:${date.getMinutes().toString().padStart(2, '0')}`;
+
+    const user_data = {
+      "data": {
+        "conversation": {
+          "bot": "Heyhey, Jill! How is your day going so far? Anything fun or exciting?",
+          "user": userMessageContent
+        },
+        "facial expressions": "neutral", // FIXME hardcoded for now
+        "Time of the day": currentTime, // FIXME hardcoded for now
+        "tone": "neutral"
+      }
+    };
+
+    fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(user_data)
+    })
+    .then(response => response.json())
+    .catch((error) => {
+      console.error('Error:', error);
+    });
 
     // Calling LlamaIndex's ChatEngine to get a streamed response
     const response = await chatEngine.chat({
